@@ -6,7 +6,7 @@ import thunk from 'redux-thunk'
 import { Provider } from 'react-redux'
 import App from './App'
 // import { counter,addGUN,removeGUN,addGunAsync } from './index.redux'
-import { BrowserRouter,Router,Link } from 'react-router-dom'
+import { BrowserRouter,Router,git  } from 'react-router-dom'
 import { counter } from './index.redux'
 
 const store = createStore(counter,applyMiddleware(thunk))

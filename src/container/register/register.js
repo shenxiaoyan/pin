@@ -1,48 +1,78 @@
 import React from 'react'
 import Logo from '../../component/logo/logo'
-import {List,InputItem,Radio,WingBlank,WhiteSpace,Button} from 'antd-mobile'
+import {List,InputItem,Radio,WhiteSpace,WingBlank,Button} from 'antd-mobile'
+import {connect} from "react-redux";
+import {register} from "../../redux/user.redux";
 
-class Register extends React.Component{
+@connect(
+    state=>state.user,
+    {register}
+)
+
+
+class Register extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-            type:"genuis",
+            user:"",
+            pwd:"",
+            repeatPwd:"",
+            type:'genius'
         }
-    }
-    register(){
-        this.props.history.push('/register')
+
+        this.handleRegister = this.handleRegister.bind(this)
     }
 
-    render(){
-        const RadioItem = Radio.Component
+    handleRegister(){
+        this.props.register(this.state)
+        console.log(this.state)
+    }
+
+    handlerChange(key,val){
+        this.setState({
+            [key]:val
+        })
+    }
+
+    render() {
+        const RadioItem = Radio.RadioItem
         return (
             <div>
+                {this.props.msg?<p>{this.props.msg}</p>:null}
                 <Logo></Logo>
-                <List>
-                    <InputItem>用户：</InputItem>
-                    <WhiteSpace />
-                    <InputItem>密码：</InputItem>
-                    <WhiteSpace />
-                    <InputItem>确认密码：</InputItem>
-                    <WhiteSpace />
-                    <RadioItem checked={this.state.type =='genuis'}>
-                        牛人
-                    </RadioItem>
-                    <RadioItem checked={this.state.type =='boss'}>
-                        老板
-                    </RadioItem>
-                    <WhiteSpace />
-                    <Button type='primary'>注册</Button>
-                </List>
-                <h2>注册页</h2>
+                <h2>注册页面</h2>
                 <WingBlank>
-                    <Button type='primary'>登录</Button>
-                    <WhiteSpace />
-                    <Button onClick={this.register} type='primary'>注册</Button>
+                    <List>
+                        <InputItem
+                            onChange={v=>this.handlerChange("user",v)}
+                        >用户</InputItem>
+                        <WhiteSpace />
+                        <InputItem
+                            onChange={v=>this.handlerChange("pwd",v)}
+                        >密码</InputItem>
+                        <WhiteSpace />
+                        <InputItem
+                            onChange={v=>this.handlerChange("repeatPwd",v)}
+                        >确认密码</InputItem>
+                        <WhiteSpace />
+                        <RadioItem checked={this.state.type ==='genius'}
+                                   onChange={v=>this.handlerChange("type","genius")}
+                        >
+                            牛人
+                        </RadioItem>
+                        <WhiteSpace />
+                        <RadioItem checked={this.state.type ==='boss'}
+                                   onChange={v=>this.handlerChange("type","boss")}
+                        >
+                            BOSS
+                        </RadioItem>
+                        <WhiteSpace />
+                        <Button type='primary' onClick={this.handleRegister}>注册</Button>
+                    </List>
                 </WingBlank>
             </div>
         )
-        }
     }
+}
 
 export default Register

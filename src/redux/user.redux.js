@@ -16,7 +16,7 @@ export function user(state = initState, action) {
 
     switch (action.type) {
         case REGISTER_SUCESS:
-            return {...state, isAuth: true, msg: "", ...action.data}
+            return {...state, isAuth: true, msg: "", ...action.payload}
         case ERROR_MSG:
             return {...state, isAuth: false, msg: action.msg}
         default:
@@ -27,11 +27,12 @@ export function user(state = initState, action) {
 }
 
 function errorMsg(msg) {
+    // 或return {msg:msg, type: ERROR_MSG}
     return {msg, type: ERROR_MSG}
 }
 
 function registerSuccess(data) {
-    return {type: REGISTER_SUCESS, data: data}
+    return {type: REGISTER_SUCESS, payload: data}
 }
 
 export function register({user, pwd, repeatPwd, type}) {

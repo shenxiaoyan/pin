@@ -1,8 +1,15 @@
 const express = require('express');
+const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
 const userRouter = require('./user');
 
 const app= express();
+app.use(cookieParser());
+app.use(bodyParser.json());
 app.use('/user',userRouter);
+app.listen(9093, function () {
+    console.log('node start')
+})
 // mongoose.connection.on('connected',function () {
 //     console.log("mongodb connected")
 // })
@@ -32,6 +39,3 @@ app.use('/user',userRouter);
 // app.get('/data', function (req, res) {
 //     res.json({name: 'shan', type: 'it'})
 // });
-app.listen(9093, function () {
-    console.log('node start')
-})
